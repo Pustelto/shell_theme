@@ -1,10 +1,19 @@
-PROMPT='
-%F{cyan}%B%n@%m:%F{white}%~ $(git_prompt_info)%b%F{008}$(package_version)
-%B%f$(return_code)%f%b '
+prompt_generator() {
+  RETVAL=$?
 
-RPROMPT=''
+  return_code
+}
 
-PROMPT_SYMBOL=[%*]%B$'\u00BB'%b
+PROMPT=$(prompt_generator)
+
+# PROMPT='
+# %F{cyan}%B%n@%m:%F{white}%~ $(git_prompt_info)%b%F{008}$(package_version)
+# %B%f$(return_code)%f%b '
+
+# RPROMPT=''
+
+PROMPT_SYMBOL=[%*]%B$'\u279E '%b
+# PROMPT_SYMBOL=[%*]%B$'\u00BB'%b
 
 function git_prompt_info() {
   WORKDIR_DIRTY=false
@@ -92,11 +101,11 @@ function +vi-vcs-detect-changes() {
 
 # Set color of prompt to red on non-0 return code
 function return_code() {
-  retval=$?
-  if [ $retval -ne 0 ]; then
+  echo "return val is: $RETVAL, $?"
+  if [ $RETVAL -ne 0 ]; then
     echo "%F{red}$PROMPT_SYMBOL"
   else
-    echo "%F{cyan}$PROMPT_SYMBOL"
+    echo "%F{green}$PROMPT_SYMBOL"
   fi
 }
 
