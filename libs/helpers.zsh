@@ -1,19 +1,5 @@
-prompt_generator() {
-  RETVAL=$?
-
-  return_code
-}
-
-PROMPT=$(prompt_generator)
-
-# PROMPT='
-# %F{cyan}%B%n@%m:%F{white}%~ $(git_prompt_info)%b%F{008}$(package_version)
-# %B%f$(return_code)%f%b '
-
-# RPROMPT=''
-
-PROMPT_SYMBOL=[%*]%B$'\u279E '%b
-# PROMPT_SYMBOL=[%*]%B$'\u00BB'%b
+THEME_GIT_PROMPT_PREFIX="[\u2325 "
+THEME_GIT_PROMPT_SUFFIX="]"
 
 function git_prompt_info() {
   WORKDIR_DIRTY=false
@@ -33,12 +19,10 @@ function git_prompt_info() {
     else
       current_state='green'
     fi
-    echo "%F{$current_state}$THEME_GIT_PROMPT_PREFIX$vcs_prompt$THEME_GIT_PROMPT_SUFFIX%f "
+    echo "%B%F{$current_state}$THEME_GIT_PROMPT_PREFIX$vcs_prompt$THEME_GIT_PROMPT_SUFFIX%f%b "
   fi
 }
 
-THEME_GIT_PROMPT_PREFIX="[\u2325"
-THEME_GIT_PROMPT_SUFFIX="]$reset_color"
 
 # Get additional informations from git via vcs module
 function git_branch_info() {
@@ -87,7 +71,7 @@ function +vi-git-untracked() {
     # If instead you want to show the marker only if there are untracked
     # files in $PWD, use:
     #[[ -n $(git ls-files --others --exclude-standard) ]] ; then
-    hook_com[staged]+=' ?'
+    hook_com[staged]+='?'
   fi
 }
 
@@ -101,12 +85,7 @@ function +vi-vcs-detect-changes() {
 
 # Set color of prompt to red on non-0 return code
 function return_code() {
-  echo "return val is: $RETVAL, $?"
-  if [ $RETVAL -ne 0 ]; then
-    echo "%F{red}$PROMPT_SYMBOL"
-  else
-    echo "%F{green}$PROMPT_SYMBOL"
-  fi
+  echo "%(?.%F{green}.%F{red})%B$PROMPT_SYMBOL%b%f "
 }
 
 # Displays name and version of current package.json file
@@ -117,4 +96,16 @@ function package_version() {
   local name=$(cat package.json | grep "name" | head -1 | awk -F: '{ print $2 }' | sed 's/[ ",]//g')
   local ver=$(cat package.json | grep "version" | head -1 | awk -F: '{ print $2}' | sed 's/[ ",]//g')
   echo $name@$ver
+}
+
+function host() {
+  [[ $SSH_CONNECTION == false ]] && return
+
+  if [[ -n $SSH_CONNECTION ]]; then
+    echo "%F{cyan}%B%n@%m%b%f "
+  fi
+}
+
+function dirpath() {
+  echo "%F{cyan}%~%f "
 }
