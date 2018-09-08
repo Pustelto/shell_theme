@@ -38,7 +38,7 @@ function git_branch_info() {
 
   zstyle ':vcs_info:*' actionformats "%b | %a | %c%m"
 
-  zstyle ':vcs_info:*' stagedstr " $(echo '^')"
+  zstyle ':vcs_info:*' stagedstr " $(echo ' ^')"
   # unstages files are hinted by red color of git info, additional mark is
   # unnecessary.
   # zstyle ':vcs_info:*' unstagedstr " $(echo '*')"
@@ -71,7 +71,7 @@ function +vi-git-untracked() {
     # If instead you want to show the marker only if there are untracked
     # files in $PWD, use:
     #[[ -n $(git ls-files --others --exclude-standard) ]] ; then
-    hook_com[staged]+='?'
+    hook_com[staged]+=' ?'
   fi
 }
 
