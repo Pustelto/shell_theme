@@ -24,6 +24,7 @@ function setup() {
   setopt noprompt{bang,cr,percent,subst} "prompt${^prompt_opts[@]}"
 
   PROMPT='$(prompt_generator)'
+  RPROMPT='$(firebase)'
 }
 
 setup
