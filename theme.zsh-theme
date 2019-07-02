@@ -9,7 +9,7 @@ source $THEME_PATH/libs/helpers.zsh
 
 function prompt_generator() {
   echo "
-$(host)$(dirpath)$(git_prompt_info)%F{008}$(package_version)
+$(host)$(dirpath)$(git_prompt_info)
 $(return_code)"
 }
 
