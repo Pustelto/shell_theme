@@ -8,18 +8,9 @@ fi
 source $THEME_PATH/libs/helpers.zsh
 
 function prompt_generator() {
-  left=$(host)$(dirpath)$(git_prompt_info)
-
-  echo "
-$left${(l,COLUMNS-${#${(%)left}},)${firebase}}
+  echo "$(host)$(dirpath)$(git_prompt_info)$(firebase_project_prompts)
 $(return_code)"
 }
-
-function right_prompt_generator() {
-  echo "$(firebase)
-"
-}
-
 
 function setup() {
   # # This variable is a magic variable used when loading themes with zsh's prompt
@@ -31,7 +22,6 @@ function setup() {
   setopt noprompt{bang,cr,percent,subst} "prompt${^prompt_opts[@]}"
 
   PROMPT='$(prompt_generator)'
-  # RPROMPT='$(right_prompt_generator)'
 }
 
 setup
