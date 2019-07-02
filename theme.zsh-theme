@@ -14,8 +14,7 @@ $(return_code)"
 }
 
 function right_prompt_generator() {
-  echo "
-$(firebase)
+  echo "$(firebase)
 "
 }
 
