@@ -111,8 +111,10 @@ function dirpath() {
 }
 
 function firebase_project_prompts() {
-  local fb_project=$(grep \"$(pwd)\" ~/.config/configstore/firebase-tools.json | cut -d" " -f2 | gsed 's/[",]//g')
-  if [[ -n $fb_project ]]; then
-    echo "%B%F{yellow}$fb_project%f%b "
+  if [[ -e ~/.config/configstore/firebase-tools.json ]]; then
+    local fb_project=$(grep \"$(pwd)\" ~/.config/configstore/firebase-tools.json | cut -d" " -f2 | gsed 's/[",]//g')
+    if [[ -n $fb_project ]]; then
+      echo "%B%F{yellow}$fb_project%f%b "
+    fi
   fi
 }
