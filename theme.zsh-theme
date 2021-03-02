@@ -2,7 +2,7 @@ PROMPT_SYMBOL='\u279C'
 
 # Set default path to plugin if there is no variable with that name
 if [ -z "$THEME_PATH" ]; then
-THEME_PATH='$HOME/pustelto'
+THEME_PATH='$HOME/pustelto_theme'
 fi
 
 source $THEME_PATH/libs/helpers.zsh
